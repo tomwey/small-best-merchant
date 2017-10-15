@@ -10,9 +10,9 @@ Rails.application.routes.draw do
   
   # 队列后台管理
   require 'sidekiq/web'
-  # authenticate :merchant do
-  #   mount Sidekiq::Web => 'sidekiq'
-  # end
+  authenticate :admin_user do
+    mount Sidekiq::Web => 'sidekiq'
+  end
   
   # # API 文档
   # mount GrapeSwaggerRails::Engine => '/apidoc'
