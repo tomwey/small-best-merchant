@@ -60,6 +60,12 @@ a.member_link, .table_actions a {
   margin-left: 20%;
 }
 
+.info-item-body {
+  img {
+    max-width: 100%;
+  }
+}
+
 .stat-table {
   td,th {
     text-align: center;

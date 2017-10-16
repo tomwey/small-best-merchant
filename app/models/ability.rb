@@ -2,8 +2,10 @@ class Ability
   include CanCan::Ability
   
   def initialize(user)
-    # can :manage, ActiveAdmin::Page, name: "Dashboard"#, namespace_name: :admin
-    can :manage, :all
+    can :manage, ActiveAdmin::Page, name: "Dashboard"#, namespace_name: :admin
+    # puts user
+    can :manage, AdminUser, merchant_id: user.merchant_id
+    can :manage, InfoItem, merchant_id: user.merchant_id
     # if user.super_admin?
     #   can :manage, :all
     # elsif user.admin?

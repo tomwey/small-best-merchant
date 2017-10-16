@@ -1,4 +1,6 @@
 ActiveAdmin.register AdminUser do
+  menu parent: 'system', label: '账号管理', priority: 1
+  
   permit_params :email, :password, :password_confirmation
 
   index do

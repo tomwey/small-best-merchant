@@ -7,9 +7,10 @@ ActiveAdmin.setup do |config|
   config.site_title = "小优大惠商家系统"
   
   config.namespace :admin do |admin|
-    # admin.build_menu do |menu|
-      # menu.add id: 'system',    label: '系统功能',        priority: 2
-      # menu.add id: 'users',     label: '用户功能',        priority: 3
+    admin.build_menu do |menu|
+      menu.add id: 'system',    label: '系统功能',        priority: 2
+      menu.add id: 'users',     label: '用户功能',        priority: 3
+      menu.add id: 'publish',   label: '发布系统',        priority: 6
       # menu.add id: 'hb_events', label: '红包系统', priority: 6
       # # menu.add id: 'item_sys',  label: '活动系统',    priority: 6
       # menu.add id: 'hb',        label: '红包收益',     priority: 8
@@ -21,7 +22,7 @@ ActiveAdmin.setup do |config|
       # menu.add id: 'other_func',label: '其它功能',     priority: 100
       # menu.add id: 'events',    label: '老版红包系统', priority: 300
       # menu.add id: 'user', label: '用户', priority: 3
-    # end
+    end
   end
   
   # 自定义页脚

@@ -103,6 +103,7 @@
       sign_rule: '口令规则'
       offerwall_channel: '积分墙渠道'
       offerwall_channel_callback: '积分墙回调记录'
+      info_item: '内容'
     attributes:
       user:
         uid: 'ID'
@@ -403,6 +404,12 @@
         title: '标题'
         body:  '内容'
         slug:  '文档标识'
+      info_item:
+        title: '标题'
+        image: '封面图'
+        body: '详情'
+        merchant_id: '所属商家'
+        uniq_id: 'ID'
         
     errors:
       models:
