@@ -104,6 +104,7 @@
       offerwall_channel: '积分墙渠道'
       offerwall_channel_callback: '积分墙回调记录'
       info_item: '内容'
+      admin_user: '登录账号'
     attributes:
       user:
         uid: 'ID'
@@ -410,6 +411,13 @@
         body: '详情'
         merchant_id: '所属商家'
         uniq_id: 'ID'
+      admin_user:
+        email: '邮箱'
+        password: '密码'
+        password_confirmation: '确认密码'
+        current_sign_in_at: '最新登录时间'
+        sign_in_count: '登录次数'
+        created_at: '创建时间'
         
     errors:
       models:
