@@ -106,6 +106,7 @@
       info_item: '内容'
       admin_user: '登录账号'
       redpack: '红包'
+      partin: '参与'
     attributes:
       user:
         uid: 'ID'
@@ -427,7 +428,22 @@
         send_count: '红包个数'
         sent_money: '已发出金额'
         is_cash: '是否是现金红包'
-        
+      partin:
+        uniq_id: 'ID'
+        item_id: '内容'
+        winnable: '参与奖励'
+        ruleable: '参与规则'
+        view_count: '浏览数'
+        take_count: '参与数'
+        share_count: '分享数'
+        sort: '显示顺序'
+        opened: '是否开启'
+        online_at: '上线时间'
+        location: '参与位置'
+        range: '参与范围'
+        need_notify: '上架是否需要通知用户'
+        rule_answer_tip: '规则答案获取提示'
+        can_take: '是否可以参与'
     errors:
       models:
         user: "用户"

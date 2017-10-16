@@ -4,10 +4,8 @@ class Ability
   def initialize(user)
     can :manage, ActiveAdmin::Page, name: "Dashboard"#, namespace_name: :admin
     # puts user
-    can :manage, AdminUser, merchant_id: user.merchant_id
-    can :manage, InfoItem, merchant_id: user.merchant_id
-    can :manage, Redpack, merchant_id: user.merchant_id
-    can :manage, Question, merchant_id: user.merchant_id
+    can :manage, [AdminUser,InfoItem,Redpack,Question,Partin], 
+      merchant_id: user.merchant_id
     
     can :create, :all
     cannot :create, AdminUser

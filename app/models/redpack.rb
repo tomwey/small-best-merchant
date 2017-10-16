@@ -14,6 +14,10 @@ class Redpack < ActiveRecord::Base
     end while self.class.exists?(:uniq_id => uniq_id)
   end
   
+  def format_type_name
+    "红包[#{self.uniq_id}](#{self.total_money / 100.0}元)"
+  end
+  
   def money=(val)
     if val.present?
       if self._type == 0

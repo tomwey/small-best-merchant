@@ -9,6 +9,10 @@ class Question < ActiveRecord::Base
   #   end
   # end
   
+  def format_type_name
+    "[题目规则]#{question}"
+  end
+  
   def answers_str=(val)
     if val.present?
       self.answers = val.split(',')
