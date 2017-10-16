@@ -105,6 +105,7 @@
       offerwall_channel_callback: '积分墙回调记录'
       info_item: '内容'
       admin_user: '登录账号'
+      redpack: '红包'
     attributes:
       user:
         uid: 'ID'
@@ -418,6 +419,14 @@
         current_sign_in_at: '最新登录时间'
         sign_in_count: '登录次数'
         created_at: '创建时间'
+      redpack:
+        _type: '红包类型'
+        total_money: '总金额'
+        min_value: '最小值'
+        max_value: '最大值'
+        send_count: '红包个数'
+        sent_money: '已发出金额'
+        is_cash: '是否是现金红包'
         
     errors:
       models:

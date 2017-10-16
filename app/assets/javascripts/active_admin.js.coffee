@@ -56,6 +56,24 @@
 #     $('#quiz-rule').hide()
 #     $('#checkin-rule').hide()
 
+window.Redpack = 
+  changeType: (el) ->
+    $el = $(el)
+    val = $el.val()
+    money = $el.data('total-money')
+    count = $el.data('total-count')
+    # alert(money)
+    if val == '0'
+      $('#redpack_money_input .label').text('总金额')
+      if money
+        $('#redpack_money').val(money / 100.0)
+    else
+      $('#redpack_money_input .label').text('单个金额')
+      if count && money
+        $('#redpack_money').val(money / count / 100.0)
+    
+    # alert($(el).data('total_money'))
+
 window.Redbag =
   needEventContents: () ->
     return true

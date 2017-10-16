@@ -6,6 +6,9 @@ class Ability
     # puts user
     can :manage, AdminUser, merchant_id: user.merchant_id
     can :manage, InfoItem, merchant_id: user.merchant_id
+    can :manage, Redpack, merchant_id: user.merchant_id
+    can :create, :all
+    cannot :create, AdminUser
     # if user.super_admin?
     #   can :manage, :all
     # elsif user.admin?
