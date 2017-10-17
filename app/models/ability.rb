@@ -3,7 +3,7 @@ class Ability
   
   def initialize(user)
     can :manage, ActiveAdmin::Page, name: "Dashboard"#, namespace_name: :admin
-    # puts user
+    
     can :manage, [InfoItem,Redpack,Question,Partin], 
       merchant_id: user.merchant_id
     
@@ -14,6 +14,11 @@ class Ability
     end
     
     cannot :create, AdminUser
+    
+    if user.merchant_blocked?
+      cannot :manage, [InfoItem,Redpack,Question,Partin]
+    end
+    
     # if user.super_admin?
     #   can :manage, :all
     # elsif user.admin?

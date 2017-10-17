@@ -7,4 +7,8 @@ class AdminUser < ActiveRecord::Base
   
   belongs_to :merchant
   
+  def merchant_blocked?
+    !merchant.opened
+  end
+  
 end
