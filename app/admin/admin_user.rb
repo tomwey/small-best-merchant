@@ -5,6 +5,8 @@ ActiveAdmin.register AdminUser do
   
   config.filters = false
   
+  actions :all, except: [:show]
+  
   index do
     selectable_column
     id_column
@@ -21,8 +23,8 @@ ActiveAdmin.register AdminUser do
   # filter :created_at
 
   form do |f|
-    f.inputs "Admin Details" do
-      f.input :email
+    f.inputs do
+      # f.input :email
       f.input :password
       f.input :password_confirmation
     end
