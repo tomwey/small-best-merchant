@@ -12,6 +12,11 @@
     canceled: '已取消'
     completed: '已结束'
     grab_tip: '无'
+    merchant:
+      auth_type_0: '未实名认证'
+      auth_type_1: '实名认证'
+      auth_type_2: '个体户实名认证'
+      auth_type_3: '企业实名认证'
     hongbao:
       use_type_1: '广告参与红包'
       use_type_2: '广告分享红包'

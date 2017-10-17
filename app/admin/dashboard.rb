@@ -1,14 +1,32 @@
 ActiveAdmin.register_page "Dashboard" do
 
-  menu priority: 1, label: proc{ I18n.t("active_admin.dashboard") }
+  menu priority: 1, label: "主页"
 
-  content title: proc{ I18n.t("active_admin.dashboard") } do
-    div class: "blank_slate_container", id: "dashboard_default_message" do
-      span class: "blank_slate" do
-        span I18n.t("active_admin.dashboard_welcome.welcome")
-        small I18n.t("active_admin.dashboard_welcome.call_to_action")
-      end
+  content title: "主页" do
+    # div class: "blank_slate_container", id: "dashboard_default_message" do
+    #   span class: "blank_slate" do
+    #     span I18n.t("active_admin.dashboard_welcome.welcome")
+    #     small I18n.t("active_admin.dashboard_welcome.call_to_action")
+    #   end
+    # end
+    
+    div class: "blank_slate_container" do
+      render "admin/dashboard/profile", owner: current_admin_user.merchant
     end
+    
+    # columns do
+    #   # column do
+    #   #   panel "基本资料" do
+    #   #     render "admin/dashboard/profile", owner: current_admin_user.merchant
+    #   #   end
+    #   # end
+    #
+    #   # column do
+    #   #   panel "数据统计" do
+    #   #   end
+    #   # end
+    # end
+
 
     # Here is an example of a simple dashboard with columns and panels.
     #
