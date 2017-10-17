@@ -14,20 +14,13 @@ ActiveAdmin.register_page "Dashboard" do
       render "admin/dashboard/profile", owner: current_admin_user.merchant
     end
     
-    # columns do
-    #   # column do
-    #   #   panel "基本资料" do
-    #   #     render "admin/dashboard/profile", owner: current_admin_user.merchant
-    #   #   end
-    #   # end
-    #
-    #   # column do
-    #   #   panel "数据统计" do
-    #   #   end
-    #   # end
-    # end
-
-
+    columns do
+      column do
+        panel "数据汇总" do
+        end
+      end
+    end
+    
     # Here is an example of a simple dashboard with columns and panels.
     #
     # columns do
