@@ -57,6 +57,16 @@
 #     $('#checkin-rule').hide()
 
 window.Redpack = 
+  showCashHBConfig: (yesOrNo) ->
+    if yesOrNo
+      $('#redpack-send-configs').show()
+    else
+      $('#redpack-send-configs').hide()
+      
+  toggleCashHB: (el) ->
+    $el = $(el)
+    Redpack.showCashHBConfig($el.prop('checked'))
+  
   changeType: (el) ->
     $el = $(el)
     val = $el.val()
@@ -118,6 +128,8 @@ $(document).ready ->
   $("select").chosen({"search_contains": true, "no_results_text":"没有找到", "placeholder_text_single":"--请选择--"});
 
   Redbag.showEventInputs(true)
+  
+  Redpack.showCashHBConfig($('#redpack-send-configs').data('is-cash') == 1)
   
   $('#redbag_use_type').change -> 
     type = $(this).val()
