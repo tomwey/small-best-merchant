@@ -110,57 +110,59 @@ form fieldset > ol >li p.inline-hints {
     text-align: center;
 }
 
-.label-danger {
-    background: #FF6969;
+.merchant-profile {
+  .label-danger {
+      background: #FF6969;
+      color: #8B2523;
+  }
+
+  .media-body .name {
+    color: rgb(18,18,18);
+    font-size: 26px;
+  }
+
+  // 未认证
+  .label-auth-type-0 {
+      background: rgb(230,176,95);
+      color: #8B2523;
+  }
+
+  // 个人认证
+  .label-auth-type-1 {
+      background: rgb(70,121,178);
+      color: #8B2523;
+  }
+
+  // 个体户认证
+  .label-auth-type-2 {
+      background: rgb(118,190,219);
+      color: #8B2523;
+  }
+
+  // 企业认证
+  .label-auth-type-3 {
+      background: #FF6969;
+      color: #8B2523;
+  }
+
+  .account-block {
+    background: rgb(119,119,119);
     color: #8B2523;
-}
+  }
 
-.media-body .name {
-  color: rgb(18,18,18);
-  font-size: 26px;
-}
-
-// 未认证
-.label-auth-type-0 {
-    background: rgb(230,176,95);
-    color: #8B2523;
-}
-
-// 个人认证
-.label-auth-type-1 {
-    background: rgb(70,121,178);
-    color: #8B2523;
-}
-
-// 个体户认证
-.label-auth-type-2 {
-    background: rgb(118,190,219);
-    color: #8B2523;
-}
-
-// 企业认证
-.label-auth-type-3 {
-    background: #FF6969;
-    color: #8B2523;
-}
-
-.account-block {
-  background: rgb(119,119,119);
-  color: #8B2523;
-}
-
-.label {
-    display: inline;
-    font-weight: normal;
-    border-radius: 2px;
-    padding: 2px 4px;
-    font-size: 75%;
-    line-height: 1;
-    color: #fff;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-//    border-radius: .25em;
+  .label {
+      display: inline;
+      font-weight: normal;
+      border-radius: 2px;
+      padding: 2px 4px;
+      font-size: 75%;
+      line-height: 1;
+      color: #fff;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: baseline;
+  //    border-radius: .25em;
+  }
 }
 
 a.member_link, .table_actions a {

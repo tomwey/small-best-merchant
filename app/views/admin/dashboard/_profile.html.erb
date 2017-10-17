@@ -1,4 +1,4 @@
-<div class="media">
+<div class="merchant-profile media">
   <div class="avatar media-left">
     <div class="image"><img class="media-object avatar-96" src="<%= owner.logo.url(:big) %>" alt="<%= owner.id %>"></div>
     <div class="level"><span class="label label-auth-type-<%= owner.auth_type %> role <%= owner.opened ? '' : 'account-block' %>"><%= owner.opened ? I18n.t("common.merchant.auth_type_#{owner.auth_type}") : '账号被禁用' %></span></div>
