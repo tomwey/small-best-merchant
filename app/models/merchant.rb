@@ -1,6 +1,10 @@
 class Merchant < ActiveRecord::Base
   validates :name, :mobile, presence: true
   
+  # has_and_belongs_to_many :users
+  has_many :user_merchants
+  has_many :users, through: :user_merchants
+  
   mount_uploader :logo, AvatarUploader
   
   before_create :generate_unique_id

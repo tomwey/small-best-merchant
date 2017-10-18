@@ -15,8 +15,11 @@ class Ability
     
     cannot :create, AdminUser
     
+    can :read, User, merchants: { id: user.merchant_id }
+    cannot :create, User
+    
     if user.merchant_blocked?
-      cannot :manage, [InfoItem,Redpack,Question,Partin, PayLog, Recharge]
+      cannot :manage, [InfoItem,Redpack,Question,Partin, PayLog, Recharge, User]
     end
     
     # if user.super_admin?
