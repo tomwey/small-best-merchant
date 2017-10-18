@@ -8,7 +8,7 @@ class Ability
       merchant_id: user.merchant_id
     
     can :create, :all
-    can :read, AdminUser, merchant_id: user.merchant_id
+    can :read, [AdminUser, PayLog, Recharge], merchant_id: user.merchant_id
     can :update, AdminUser do |admin|
       admin.id == user.id
     end
@@ -16,7 +16,7 @@ class Ability
     cannot :create, AdminUser
     
     if user.merchant_blocked?
-      cannot :manage, [InfoItem,Redpack,Question,Partin]
+      cannot :manage, [InfoItem,Redpack,Question,Partin, PayLog, Recharge]
     end
     
     # if user.super_admin?

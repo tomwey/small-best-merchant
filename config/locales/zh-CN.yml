@@ -112,6 +112,8 @@
       admin_user: '登录账号'
       redpack: '红包'
       partin: '参与'
+      recharge: '充值'
+      pay_log: '交易明细'
     attributes:
       user:
         uid: 'ID'

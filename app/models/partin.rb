@@ -40,11 +40,12 @@ class Partin < ActiveRecord::Base
       money = hb.total_money - hb.sent_money
       if money > 0
         if money < self.merchant.balance
+          
+          # 写交易记录
+          PayLog.create!(money: -money, merchant: merchant, payable: self, title: '红包广告上架')
+          
           self.opened = true
           self.save!
-          
-          self.merchant.balance -= money
-          self.merchant.save!
           
           return true
         else
@@ -67,8 +68,8 @@ class Partin < ActiveRecord::Base
       hb = self.winnable
       money = hb.total_money - hb.sent_money
       if money > 0
-        self.merchant.balance += money
-        self.merchant.save!
+        # 写交易记录
+        PayLog.create!(money: money, merchant: merchant, payable: self, title: '红包广告下架')
       end
       self.opened = false
       self.save!
