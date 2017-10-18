@@ -35,13 +35,49 @@ class Partin < ActiveRecord::Base
   end
   
   def open!
-    self.opened = true
-    self.save!
+    if self.winnable_type == 'Redpack'
+      hb = self.winnable
+      money = hb.total_money - hb.sent_money
+      if money > 0
+        if money < self.merchant.balance
+          self.opened = true
+          self.save!
+          
+          self.merchant.balance -= money
+          self.merchant.save!
+          
+          return true
+        else
+          return false
+        end
+      else
+        self.opened = true
+        self.save!
+        return true
+      end
+    else
+      self.opened = true
+      self.save!
+      return true
+    end
   end
   
   def close!
-    self.opened = false
-    self.save!
+    if self.winnable_type == 'Redpack'
+      hb = self.winnable
+      money = hb.total_money - hb.sent_money
+      if money > 0
+        self.merchant.balance += money
+        self.merchant.save!
+      end
+      self.opened = false
+      self.save!
+      return true
+    else
+      self.opened = false
+      self.save!
+      return true
+    end
   end
   
   def self.items_for(merchant_id)

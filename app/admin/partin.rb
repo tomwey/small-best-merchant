@@ -1,5 +1,5 @@
 ActiveAdmin.register Partin do
-  menu parent: 'publish', priority: 8, label: '广告参与'
+  menu parent: 'publish', priority: 8, label: '广告'
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #
@@ -44,24 +44,28 @@ index do
 end
 
 # 上架
-batch_action :open do |ids|
-  batch_action_collection.find(ids).each do |e|
-    e.open!
-  end
-  redirect_to collection_path, alert: "已上架"
-end
+# batch_action :open do |ids|
+#   batch_action_collection.find(ids).each do |e|
+#     e.open!
+#   end
+#   redirect_to collection_path, alert: "已上架"
+# end
 member_action :open, method: :put do
-  resource.open!
-  redirect_to collection_path, notice: '已上架'
+  flag = resource.open! # ? '已上架' : '余额不足,上架失败'
+  if flag
+    redirect_to collection_path, notice: '上架成功'
+  else
+    redirect_to collection_path, alert: '上架失败，余额不足'
+  end
 end
 
 # 下架
-batch_action :close do |ids|
-  batch_action_collection.find(ids).each do |e|
-    e.close!
-  end
-  redirect_to collection_path, alert: "已下架"
-end
+# batch_action :close do |ids|
+#   batch_action_collection.find(ids).each do |e|
+#     e.close!
+#   end
+#   redirect_to collection_path, alert: "已下架"
+# end
 member_action :close, method: :put do
   resource.close!
   redirect_to collection_path, notice: '已下架'
