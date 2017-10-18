@@ -452,6 +452,7 @@
         need_notify: '上架是否需要通知用户'
         rule_answer_tip: '规则答案获取提示'
         can_take: '是否可以参与'
+        win_type: '参与奖励'
     errors:
       models:
         user: "用户"

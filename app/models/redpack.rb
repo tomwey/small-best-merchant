@@ -20,7 +20,7 @@ class Redpack < ActiveRecord::Base
   
   validate :require_send_config
   def require_send_config
-    if self.redpack_send_config.blank?
+    if self.is_cash && self.redpack_send_config.blank?
       errors.add(:base, '微信现金红包配置不能为空')
       return false
     end

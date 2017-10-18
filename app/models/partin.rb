@@ -4,6 +4,8 @@ class Partin < ActiveRecord::Base
   belongs_to :info_item, foreign_key: 'item_id'
   belongs_to :merchant
   
+  validates :winnable_id, :winnable_type, :win_type, presence: true
+  
   before_create :generate_unique_id
   def generate_unique_id
     begin
