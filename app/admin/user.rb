@@ -35,74 +35,8 @@ index do
     o.wechat_profile.try(:unsubscribe_time).blank? ? '' : o.wechat_profile.try(:unsubscribe_time).strftime('%Y年%m月%d日 %H:%M:%S')
   end
   column :created_at
-  actions defaults: false do |u|
-    item "查看", cpanel_user_path(u)
-    if current_admin.admin?
-      item "编辑", edit_cpanel_user_path(u)
-      if u.verified
-        item "禁用", block_cpanel_user_path(u), method: :put, data: { confirm: '你确定吗？' }, class: 'danger'
-      else
-        item "启用", unblock_cpanel_user_path(u), method: :put, data: { confirm: '你确定吗？' }
-      end
-    
-      if u.supports_user_pay
-        item "关闭余额抵扣", disable_pay_cpanel_user_path(u), method: :put, data: { confirm: '你确定吗？' }, class: 'danger'
-      else
-        item "开启余额抵扣", enable_pay_cpanel_user_path(u), method: :put, data: { confirm: '你确定吗？' }
-      end
-    end
-    # item "删除", cpanel_user_path(u), method: :delete, data: { confirm: '你确定吗？' }
-  end
+  actions
   
-end
-
-# 禁用账户
-batch_action :block do |ids|
-  batch_action_collection.find(ids).each do |o|
-    o.block!
-  end
-  redirect_to collection_path, alert: "已禁用"
-end
-member_action :block, method: :put do
-  resource.block!
-  redirect_to collection_path, notice: '禁用成功'
-end
-
-# 启用账户
-batch_action :unblock do |ids|
-  batch_action_collection.find(ids).each do |o|
-    o.unblock!
-  end
-  redirect_to collection_path, alert: "已启用"
-end
-member_action :unblock, method: :put do
-  resource.unblock!
-  redirect_to collection_path, notice: '启用成功'
-end
-
-# 开启余额抵扣
-batch_action :enable_pay do |ids|
-  batch_action_collection.find(ids).each do |o|
-    o.enable_pay!
-  end
-  redirect_to collection_path, alert: "已开启"
-end
-
-member_action :enable_pay, method: :put do
-  resource.enable_pay!
-  redirect_to collection_path, notice: '开启成功'
-end
-
-# 关闭余额抵扣
-batch_action :disable_pay do |ids|
-  batch_action_collection.find(ids).each do |o|
-    o.disable_pay!
-  end
-  redirect_to collection_path, alert: "已关闭"
-end
-member_action :disable_pay, method: :put do
-  resource.disable_pay!
-  redirect_to collection_path, notice: '关闭成功'
 end
 
 form html: { multipart: true } do |f|
