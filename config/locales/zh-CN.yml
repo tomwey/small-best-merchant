@@ -114,6 +114,7 @@
       partin: '参与'
       recharge: '充值'
       pay_log: '交易明细'
+      merchant_tag: '商家标签'
     attributes:
       user:
         uid: 'ID'
