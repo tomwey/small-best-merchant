@@ -56,6 +56,17 @@
 #     $('#quiz-rule').hide()
 #     $('#checkin-rule').hide()
 
+window.Partin = 
+  showShareConfig: (yesOrNo) ->
+    if yesOrNo
+      $('#partin-share-configs').show()
+    else
+      $('#partin-share-configs').hide()
+      
+  toggleShareConfig: (el) ->
+    $el = $(el)
+    Partin.showShareConfig($el.prop('checked'))
+
 window.Redpack = 
   showCashHBConfig: (yesOrNo) ->
     if yesOrNo
@@ -130,6 +141,8 @@ $(document).ready ->
   Redbag.showEventInputs(true)
   
   Redpack.showCashHBConfig($('#redpack-send-configs').data('is-cash') == 1)
+  
+  Partin.showShareConfig($('#partin-share-configs').data('need-share') == 1)
   
   $('#redbag_use_type').change -> 
     type = $(this).val()

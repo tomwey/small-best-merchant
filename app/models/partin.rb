@@ -4,7 +4,28 @@ class Partin < ActiveRecord::Base
   belongs_to :info_item, foreign_key: 'item_id'
   belongs_to :merchant
   
-  validates :winnable_id, :winnable_type, :win_type, presence: true
+  # 用于发送微信现金红包
+  has_one :partin_share_config, dependent: :destroy
+  accepts_nested_attributes_for :partin_share_config, allow_destroy: true, 
+    reject_if: proc { |o| o[:title].blank? }
+  
+  validates :win_type, presence: true
+  
+  validate :require_share_config
+  def require_share_config
+    if self.need_share && self.partin_share_config.blank?
+      errors.add(:base, '分享配置不能为空')
+      return false
+    end
+  end
+  
+  validate :require_win_type
+  def require_win_type
+    if winnable.blank?
+      errors.add(:base, '必须要指定一个参与奖励')
+      return false
+    end
+  end
   
   before_create :generate_unique_id
   def generate_unique_id
@@ -34,6 +55,13 @@ class Partin < ActiveRecord::Base
     end
     
     self.location = loc
+  end
+  
+  after_save :remove_share_config_if_needed
+  def remove_share_config_if_needed
+    if !need_share
+      partin_share_config.destroy if partin_share_config
+    end
   end
   
   def open!
@@ -92,10 +120,16 @@ class Partin < ActiveRecord::Base
     [['-- 选择参与规则 --', nil]] + arr.map { |o| [o.format_type_name, "#{o.class}-#{o.id}"] }
   end
   
-  def self.win_types_for(merchant_id)
-    ids = Partin.where(winnable_type: 'Redpack').pluck(:winnable_id)
-    arr = Redpack.where(merchant_id: merchant_id).where.not(id: ids).order('id desc')
-    [['-- 选择参与奖励 --', nil]] + arr.map { |o| [o.format_type_name, "#{o.class}-#{o.id}"] }
+  def self.win_types_for(merchant_id, partin)
+    # ids1 = Partin.where(winnable_type: 'Redpack').pluck(:winnable_id)
+    # ids2 =
+    arr  = Redpack.where(merchant_id: merchant_id, in_use: false).order('id desc')
+    if partin.winnable
+      arr << partin.winnable
+      arr.map { |o| [o.format_type_name, "#{o.class}-#{o.id}"] }
+    else
+      [['-- 选择参与奖励 --', nil]] + arr.map { |o| [o.format_type_name, "#{o.class}-#{o.id}"] }
+    end
   end
   
   def rule_type=(val)
