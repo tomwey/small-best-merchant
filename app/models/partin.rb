@@ -93,7 +93,8 @@ class Partin < ActiveRecord::Base
   end
   
   def self.win_types_for(merchant_id)
-    arr = Redpack.where(merchant_id: merchant_id).order('id desc')
+    ids = Partin.where(winnable_type: 'Redpack').pluck(:winnable_id)
+    arr = Redpack.where(merchant_id: merchant_id).where.not(id: ids).order('id desc')
     [['-- 选择参与奖励 --', nil]] + arr.map { |o| [o.format_type_name, "#{o.class}-#{o.id}"] }
   end
   
