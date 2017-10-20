@@ -29,9 +29,6 @@ index do
     o.partin.item_id.blank? ? '' : link_to(o.partin.info_item.title, [:admin, o.partin])
   end
   column 'IP', :ip, sortable: false
-  column '来源类型', sortable: false do |o|
-    o.from_type == 0 ? 'APP客户端' : '网页'
-  end
   column '位置坐标', sortable: false do |o|
     o.location
   end
