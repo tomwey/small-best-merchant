@@ -7,4 +7,8 @@ class PartinViewLog < ActiveRecord::Base
     partin.add_view_count
   end
   
+  def from_user
+    User.find_by(id: from_user_id)
+  end
+  
 end

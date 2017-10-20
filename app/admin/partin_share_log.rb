@@ -25,6 +25,15 @@ index do
       o.user.format_nickname
     end
   end
+  column '来自用户', sortable: false do |o|
+    # o.user_id.blank? ? '' : link_to(o.user.format_nickname, [:admin, o.user])
+    if o.from_user_id.blank?
+      ''
+    else
+      # image_tag(o.user.avatar_url(:small))
+      o.from_user.try(:format_nickname)
+    end
+  end
   column '广告', sortable: false do |o|
     o.partin.item_id.blank? ? '' : link_to(o.partin.info_item.title, [:admin, o.partin])
   end
