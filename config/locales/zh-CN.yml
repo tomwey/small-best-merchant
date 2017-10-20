@@ -115,6 +115,9 @@
       recharge: '充值'
       pay_log: '交易明细'
       merchant_tag: '商家标签'
+      partin_view_log: '广告浏览'
+      partin_share_log: '广告转发'
+      partin_take_log: '广告参与'
     attributes:
       user:
         uid: 'ID'

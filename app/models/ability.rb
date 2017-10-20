@@ -13,11 +13,10 @@ class Ability
       admin.id == user.id
     end
     
-    cannot :create, AdminUser
+    cannot :create, [AdminUser, PartinViewLog, PartinTakeLog, PartinShareLog,User,MerchantTag]
     
     can :read, User, merchants: { id: user.merchant_id }
-    
-    cannot :create, [User,MerchantTag]
+    can :read, [PartinViewLog, PartinTakeLog, PartinShareLog], partin: { merchant_id: user.merchant_id }
     
     if user.merchant_blocked?
       cannot :manage, [InfoItem,Redpack,Question,Partin, PayLog, Recharge, User]
