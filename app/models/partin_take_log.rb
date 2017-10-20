@@ -17,6 +17,10 @@ class PartinTakeLog < ActiveRecord::Base
     create_user_merchant_relationship
   end
   
+  def from_user
+    User.find_by(id: from_user_id)
+  end
+  
   private
   def create_user_merchant_relationship
     UserMerchant.where(user_id: user.id, merchant_id: partin.merchant_id).first_or_create
