@@ -7,6 +7,12 @@ class Redpack < ActiveRecord::Base
   
   validates :money, :total_count, presence: true
   
+  scope :not_in_use, -> { where(in_use: false) }
+  scope :partin, -> { where(use_type: 0) }
+  scope :share,  -> { where(use_type: 1) }
+  
+  USE_TYPES = [['参与广告', 0], ['分享奖励', 1]]
+  
   validate :check_min_value_if_is_cash
   def check_min_value_if_is_cash
     if self.is_cash
@@ -35,6 +41,11 @@ class Redpack < ActiveRecord::Base
       end
       self.uniq_id = (n.to_s + SecureRandom.random_number.to_s[2..8]).to_i
     end while self.class.exists?(:uniq_id => uniq_id)
+  end
+  
+  def in_use!(flag)
+    self.in_use = flag
+    self.save!
   end
   
   after_save :remove_send_config_if_needed

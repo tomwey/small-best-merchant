@@ -28,8 +28,8 @@ class PartinShareConfig < ActiveRecord::Base
   end
   
   def self.win_types_for(merchant_id, config)
-    arr  = Redpack.where(merchant_id: merchant_id, in_use: false).order('id desc')
-    if config.winnable
+    arr = Redpack.where(merchant_id: merchant_id).share.not_in_use.order('id desc')
+    if config.winnable && config.winnable_type == 'Redpack'
       arr << config.winnable
       arr.map { |o| [o.format_type_name, "#{o.class}-#{o.id}"] }
     else

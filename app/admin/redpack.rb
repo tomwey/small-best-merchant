@@ -44,6 +44,7 @@ form html: { multipart: true } do |f|
         input_html: { onchange: 'Redpack.changeType(this)', 
         data: { total_money: "#{f.object.try(:total_money)}", total_count: "#{f.object.try(:total_count)}" } }
     end
+    f.input :use_type, as: :select, label: '用途', collection: Redpack::USE_TYPES, required: true
       #data: { total_money: "#{f.object.try(:total_money)}", total_count: "#{f.object.try(:total_count)}" }
     if f.object.new_record? or f.object._type == 0
       f.input :money, as: :number, label: "总金额"

@@ -77,14 +77,19 @@ class Partin < ActiveRecord::Base
           self.opened = true
           self.save!
           
+          self.winnable.in_use!(true)
+          
           return true
         else
           return false
         end
       else
-        self.opened = true
-        self.save!
-        return true
+        # self.opened = true
+        # self.save!
+        #
+        # self.winnable.in_use!(true)
+        
+        return false
       end
     else
       self.opened = true
@@ -103,6 +108,9 @@ class Partin < ActiveRecord::Base
       end
       self.opened = false
       self.save!
+      
+      self.winnable.in_use!(false)
+      
       return true
     else
       self.opened = false
@@ -123,7 +131,7 @@ class Partin < ActiveRecord::Base
   def self.win_types_for(merchant_id, partin)
     # ids1 = Partin.where(winnable_type: 'Redpack').pluck(:winnable_id)
     # ids2 =
-    arr  = Redpack.where(merchant_id: merchant_id, in_use: false).order('id desc')
+    arr  = Redpack.where(merchant_id: merchant_id).partin.not_in_use.order('id desc')
     if partin.winnable
       arr << partin.winnable
       arr.map { |o| [o.format_type_name, "#{o.class}-#{o.id}"] }
