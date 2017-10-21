@@ -94,6 +94,10 @@ class Partin < ActiveRecord::Base
     self.opened = true
     self.save!
     
+    if self.winnable_type == 'Redpack'
+      self.winnable.in_use!(true)
+    end
+    
     return true
   end
   
@@ -120,6 +124,10 @@ class Partin < ActiveRecord::Base
     
     self.opened = false
     self.save!
+    
+    if self.winnable_type == 'Redpack'
+      self.winnable.in_use!(false)
+    end
     
     return true
   end

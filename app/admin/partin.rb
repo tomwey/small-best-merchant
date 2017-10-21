@@ -81,10 +81,15 @@ form do |f|
   f.inputs '基本信息' do
     f.input :item_id, as: :select, label: '广告内容', collection: Partin.items_for(current_admin_user.merchant_id),prompt: '-- 选择参与内容 --'
     f.input :rule_type, as: :select, label: '参与规则', collection: Partin.rule_types_for(current_admin_user.merchant_id), prompt: '-- 选择参与规则 --'
+    if f.object.new_record? or !f.object.opened
     f.input :win_type,  as: :select, label: '参与奖励', collection: Partin.win_types_for(current_admin_user.merchant_id, f.object), prompt: '-- 选择参与奖励 --'
+    end
     f.input :rule_answer_tip, placeholder: '题目的答案在广告内容中找，注意只有一次回答机会。'
     f.input :need_notify
+    
+    if f.object.new_record? or !f.object.opened
     f.input :need_share, as: :boolean, label: '是否支持微信分享', input_html: { onchange: 'Partin.toggleShareConfig(this)' }
+    end
     # f.input :opened
     f.input :sort
   end
@@ -96,7 +101,10 @@ form do |f|
     s.input :icon, label: '分享图标', hint: '格式为png,jpg,jped,gif,尺寸为正方形；如果不设置默认会用商家的logo'
     s.input :icon_cache, as: :hidden
     s.input :title, label: '分享标题'
-    s.input :win_type,  as: :select, label: '分享者奖励', collection: PartinShareConfig.win_types_for(current_admin_user.merchant_id, s.object), prompt: '-- 选择参与奖励 --'
+    if f.object.new_record? or !f.object.opened # 如果还未创建或者没有上架，可以进行修改
+      s.input :win_type,  as: :select, label: '分享者奖励', collection:     PartinShareConfig.win_types_for(current_admin_user.merchant_id, s.object), 
+      prompt: '-- 选择参与奖励 --'
+    end
   end
   
   f.inputs '范围信息' do
