@@ -65,58 +65,63 @@ class Partin < ActiveRecord::Base
   end
   
   def open!
-    if self.winnable_type == 'Redpack'
-      hb = self.winnable
-      money = hb.total_money - hb.sent_money
-      if money > 0
-        if money < self.merchant.balance
-          
-          # 写交易记录
-          PayLog.create!(money: -money, merchant: merchant, payable: self, title: '红包广告上架')
-          
-          self.opened = true
-          self.save!
-          
-          self.winnable.in_use!(true)
-          
-          return true
-        else
-          return false
-        end
-      else
-        # self.opened = true
-        # self.save!
-        #
-        # self.winnable.in_use!(true)
-        
-        return false
-      end
-    else
-      self.opened = true
-      self.save!
-      return true
+    share_money = 0
+    if partin_share_config && partin_share_config.winnable && partin_share_config.winnable_type == 'Redpack'
+      left_money = partin_share_config.winnable.left_money
+      share_money = left_money if left_money > 0
     end
+    
+    money = 0
+    if self.winnable_type == 'Redpack'
+      left_money = self.winnable.left_money
+      money = left_money if left_money > 0
+    end
+    
+    if (share_money + money) > self.merchant.balance
+      return false
+    end
+    
+    if share_money > 0
+      # 写交易记录
+      PayLog.create!(money: -share_money, merchant: merchant, payable: self, title: "广告上架，分享奖励红包[#{partin_share_config.winnable.uniq_id}]扣除")
+    end
+    
+    if money > 0
+      # 写交易记录
+      PayLog.create!(money: -money, merchant: merchant, payable: self, title: "广告上架，红包[#{self.winnable.uniq_id}]扣除")
+    end
+    
+    self.opened = true
+    self.save!
+    
+    return true
   end
   
   def close!
-    if self.winnable_type == 'Redpack'
-      hb = self.winnable
-      money = hb.total_money - hb.sent_money
-      if money > 0
-        # 写交易记录
-        PayLog.create!(money: money, merchant: merchant, payable: self, title: '红包广告下架')
-      end
-      self.opened = false
-      self.save!
-      
-      self.winnable.in_use!(false)
-      
-      return true
-    else
-      self.opened = false
-      self.save!
-      return true
+    share_money = 0
+    if partin_share_config && partin_share_config.winnable && partin_share_config.winnable_type == 'Redpack'
+      share_money = partin_share_config.winnable.left_money
     end
+    
+    money = 0
+    if self.winnable_type == 'Redpack'
+      money = self.winnable.left_money
+    end
+    
+    if share_money > 0
+      # 写交易记录
+      PayLog.create!(money: share_money, merchant: merchant, payable: self, title: "广告下架，分享奖励红包[#{partin_share_config.winnable.uniq_id}]返还")
+    end
+    
+    if money > 0
+      # 写交易记录
+      PayLog.create!(money: money, merchant: merchant, payable: self, title: "广告下架，红包[#{self.winnable.uniq_id}]返还")
+    end
+    
+    self.opened = false
+    self.save!
+    
+    return true
   end
   
   def self.items_for(merchant_id)

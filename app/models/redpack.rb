@@ -13,6 +13,14 @@ class Redpack < ActiveRecord::Base
   
   USE_TYPES = [['参与广告', 0], ['分享奖励', 1]]
   
+  validate :total_money_large_sent_money
+  def total_money_large_sent_money
+    if total_money <= sent_money
+      errors.add(:base, "红包总金额必须要大于#{sent_money / 100.0}元")
+      return false
+    end
+  end
+  
   validate :check_min_value_if_is_cash
   def check_min_value_if_is_cash
     if self.is_cash
@@ -57,6 +65,10 @@ class Redpack < ActiveRecord::Base
   
   def format_type_name
     "红包[#{self.uniq_id}](#{self.total_money / 100.0}元)"
+  end
+  
+  def left_money
+    total_money - sent_money
   end
   
   def self.wx_send_scenes
