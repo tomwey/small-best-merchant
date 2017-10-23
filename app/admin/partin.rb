@@ -19,10 +19,13 @@ index do
   column '参与规则', sortable: false do |o|
     o.ruleable_id.blank? ? '' : link_to(o.ruleable.format_type_name, [:admin, o.ruleable])
   end
-  column :rule_answer_tip, sortable: false
-  column :need_notify, sortable: false do |o|
-    o.need_notify ? '需要' : '不需要'
+  column '状态', sortable: false do |o|
+    o.can_take ? '有剩余' : '已抢完'
   end
+  # column :rule_answer_tip, sortable: false
+  # column :need_notify, sortable: false do |o|
+  #   o.need_notify ? '需要' : '不需要'
+  # end
 
   column('at', :created_at)
 
@@ -42,6 +45,54 @@ index do
     # item "删除", cpanel_redbag_path(o), method: :delete, data: { confirm: '你确定吗？' }
   end
 
+end
+
+show do 
+  panel "广告数据汇总" do
+    table class: 'stat-table' do
+      tr do
+        th '总金额(元)'
+        th '已抢金额(元)'
+        th '浏览数'
+        th '参与数'
+        th '分享数'
+      end
+      tr do
+        td partin.winnable.try(:total_money) / 100.0
+        td partin.winnable.try(:sent_money) / 100.0
+        td partin.view_count
+        td partin.take_count
+        td partin.share_count
+      end
+    end # end table
+  end
+  
+  panel "最新参与记录" do
+    table_for partin.partin_take_logs.order("id desc").limit(20) do
+      column("用户") { |o| o.user.blank? ? '' : link_to(o.user.try(:format_nickname), admin_user_path(o.user))  }
+      column("抢得金额") { |o| o.resultable.try(:money) / 100.0 }
+      column('位置') { |o| o.location }
+      column('IP') { |o| o.ip }
+      column("时间") { |o| o.created_at.strftime('%Y-%m-%d %H:%M:%S') }
+    end
+  end
+  
+  panel "最新浏览记录" do
+    table_for partin.partin_view_logs.order("id desc").limit(20) do
+      column("用户") { |o| o.user.blank? ? '' : link_to(o.user.try(:format_nickname), admin_user_path(o.user)) }
+      column('位置') { |o| o.location }
+      column('IP') { |o| o.ip }
+      column("时间") { |o| o.created_at.strftime('%Y-%m-%d %H:%M:%S') }
+    end
+  end
+  
+  panel '用户分布' do
+    view_locations = partin.partin_view_logs.where.not(location: nil).pluck(:location)
+    earn_locations = partin.partin_take_logs.where.not(location: nil).pluck(:location)
+    
+    render 'partin_user_map', view_locations: view_locations, earn_locations: earn_locations
+  end
+  
 end
 
 # 上架

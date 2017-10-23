@@ -4,6 +4,9 @@ class Partin < ActiveRecord::Base
   belongs_to :info_item, foreign_key: 'item_id'
   belongs_to :merchant
   
+  has_many :partin_view_logs
+  has_many :partin_take_logs
+  has_many :partin_share_logs
   # 用于发送微信现金红包
   has_one :partin_share_config, dependent: :destroy
   accepts_nested_attributes_for :partin_share_config, allow_destroy: true, 
