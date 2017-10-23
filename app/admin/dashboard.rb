@@ -33,10 +33,12 @@ ActiveAdmin.register_page "Dashboard" do
             tr do
               @total_user ||= current_admin_user.merchant.users.count
               @left_count ||= Partin.where(merchant_id: current_admin_user.merchant_id).opened.can_take.count
-              @left_money ||= Partin.where(merchant_id: current_admin_user.merchant_id).opened.can_take.map { |o| o.winnable.try(:left_money) }.sum / 100.0
+              @left_money ||= Redpack.where(merchant_id: current_admin_user.merchant_id).map { |o| o.left_money }.sum / 100.0
+              # Partin.where(merchant_id: current_admin_user.merchant_id).opened.map { |o| o.winnable.try(:left_money) }.sum / 100.0
               
               @total_sent_count ||= Partin.where(merchant_id: current_admin_user.merchant_id).opened.count
-              @total_sent_money ||= Partin.where(merchant_id: current_admin_user.merchant_id).opened.can_take.map { |o| o.winnable.try(:total_money) }.sum / 100.0
+              @total_sent_money ||= Redpack.where(merchant_id: current_admin_user.merchant_id).map { |o| o.total_money }.sum / 100.0
+              # Partin.where(merchant_id: current_admin_user.merchant_id).opened.map { |o| o.winnable.try(:total_money) }.sum / 100.0
               
               @total_taked_money ||= PartinTakeLog.joins(:partin).where(partins: { merchant_id: current_admin_user.merchant_id }).map { |o| o.resultable.try(:money) }.sum / 100.0
               
