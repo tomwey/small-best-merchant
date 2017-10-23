@@ -9,6 +9,13 @@ class Partin < ActiveRecord::Base
   accepts_nested_attributes_for :partin_share_config, allow_destroy: true, 
     reject_if: proc { |o| o[:title].blank? }
   
+  scope :opened,   -> { where(opened: true) }
+  scope :can_take, -> { where(can_take: true) }
+  scope :onlined,  -> { where('online_at is null or online_at < ?', Time.zone.now) }
+  scope :no_location_limit, -> { where(range: nil) }
+  scope :join_merchant, -> { joins(:merchant).select('partins.*') }
+  scope :sorted,   -> { join_merchant.select('(merchants.score + partins.sort) as sort_order').order('sort_order desc') }
+  
   validates :win_type, presence: true
   
   validate :require_share_config

@@ -19,7 +19,7 @@ class Ability
     can :read, [PartinViewLog, PartinTakeLog, PartinShareLog], partin: { merchant_id: user.merchant_id }
     
     cannot :update, Redpack, merchant_id: user.merchant_id, in_use: true
-    cannot :destroy, Redpack
+    cannot :destroy, :all
     
     if user.merchant_blocked?
       cannot :manage, [InfoItem,Redpack,Question,Partin, PayLog, Recharge, User]

@@ -17,6 +17,95 @@ ActiveAdmin.register_page "Dashboard" do
     columns do
       column do
         panel "数据汇总" do
+          
+          table class: 'stat-table' do
+            tr do
+              th '总用户数'
+              th '还剩广告个数'
+              th '还剩广告金额'
+              th '累计发广告个数'
+              th '累计发广告金额'
+              th '累计被抢金额'
+              th '累计浏览次数'
+              th '累计参与次数'
+              th '累计转发次数'
+            end
+            tr do
+              @total_user ||= current_admin_user.merchant.users.count
+              @left_count ||= Partin.where(merchant_id: current_admin_user.merchant_id).opened.can_take.count
+              @left_money ||= Partin.where(merchant_id: current_admin_user.merchant_id).opened.can_take.map { |o| o.winnable.try(:left_money) }.sum / 100.0
+              
+              @total_sent_count ||= Partin.where(merchant_id: current_admin_user.merchant_id).opened.count
+              @total_sent_money ||= Partin.where(merchant_id: current_admin_user.merchant_id).opened.can_take.map { |o| o.winnable.try(:total_money) }.sum / 100.0
+              
+              @total_taked_money ||= PartinTakeLog.joins(:partin).where(partins: { merchant_id: current_admin_user.merchant_id }).map { |o| o.resultable.try(:money) }.sum / 100.0
+              
+              @total_view_count ||= PartinViewLog.joins(:partin).where(partins: { merchant_id: current_admin_user.merchant_id }).count
+              @total_take_count ||= PartinTakeLog.joins(:partin).where(partins: { merchant_id: current_admin_user.merchant_id }).count
+              @total_share_count ||= PartinShareLog.joins(:partin).where(partins: { merchant_id: current_admin_user.merchant_id }).count
+              td @total_user
+              td @left_count
+              td @left_money
+              td @total_sent_count
+              td @total_sent_money
+              td @total_taked_money
+              td @total_view_count
+              td @total_take_count
+              td @total_share_count
+            end
+          end # end table
+          
+          table class: 'stat-table' do
+            tr do
+              th '今日用户数'
+              th '今日发广告个数'
+              th '今日发广告金额'
+              th '今日被抢金额'
+              th '今日浏览次数'
+              th '今日参与次数'
+              th '今日转发次数'
+            end
+            
+            tr do
+              
+              @today_user ||= User.joins(:user_merchants).where(user_merchants: { merchant_id: current_admin_user.merchant_id, 
+                created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day }).count
+              #current_admin_user.merchant.users.count
+              
+              @today_sent_count ||= Partin.where(merchant_id: current_admin_user.merchant_id)
+                .where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
+                .opened.count
+              @today_sent_money ||= Partin.where(merchant_id: current_admin_user.merchant_id)
+                .where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
+                .opened.can_take.map { |o| o.winnable.try(:total_money) }.sum / 100.0
+              
+              @today_taked_money ||= PartinTakeLog.joins(:partin)
+                .where(partins: { merchant_id: current_admin_user.merchant_id })
+                .where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
+                .map { |o| o.resultable.try(:money) }.sum / 100.0
+              
+              @today_view_count ||= PartinViewLog.joins(:partin)
+                .where(partins: { merchant_id: current_admin_user.merchant_id })
+                .where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
+                .count
+              @today_take_count ||= PartinTakeLog.joins(:partin)
+                .where(partins: { merchant_id: current_admin_user.merchant_id })
+                .where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
+                .count
+              @today_share_count ||= PartinShareLog.joins(:partin)
+                .where(partins: { merchant_id: current_admin_user.merchant_id })
+                .where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).count
+              td @today_user
+              td @today_sent_count
+              td @today_sent_money
+              td @today_taked_money
+              td @today_view_count
+              td @today_take_count
+              td @today_share_count
+            end
+            
+          end # end
+          
         end
       end
     end
