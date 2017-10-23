@@ -12,9 +12,9 @@ ActiveAdmin.setup do |config|
       menu.add id: 'users',       label: '用户系统',        priority: 3
       menu.add id: 'publish',     label: '发布系统',        priority: 5
       menu.add id: 'partin_logs', label: '数据统计',        priority: 6
-      menu.add id: 'messages',    label: '消息系统',        priority: 7
+      # menu.add id: 'messages',    label: '消息系统',        priority: 7
       menu.add id: 'pays',        label: '交易系统',        priority: 8
-      menu.add id: 'auth',        label: '权限系统',        priority: 9
+      # menu.add id: 'auth',        label: '权限系统',        priority: 9
       # menu.add id: 'hb_events', label: '红包系统', priority: 6
       # # menu.add id: 'item_sys',  label: '活动系统',    priority: 6
       # menu.add id: 'hb',        label: '红包收益',     priority: 8
