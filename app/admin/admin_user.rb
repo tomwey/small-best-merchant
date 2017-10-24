@@ -24,6 +24,11 @@ ActiveAdmin.register AdminUser do
   # filter :current_sign_in_at
   # filter :sign_in_count
   # filter :created_at
+  
+  member_action :unbind, method: :put do
+    resource.unbind!
+    redirect_to collection_path, notice: '解绑成功'
+  end
 
   form do |f|
     f.inputs '修改密码' do

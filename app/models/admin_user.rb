@@ -17,6 +17,11 @@ class AdminUser < ActiveRecord::Base
     "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=#{qrcode_ticket}"
   end
   
+  def unbind
+    self.wx_user_id = nil
+    self.save!
+  end
+  
   private
   def generate_qrcode_ticket
     Wechat::Base.fetch_qrcode_ticket("bind:#{self.email}", false)
