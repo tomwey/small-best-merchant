@@ -108,6 +108,11 @@ class Partin < ActiveRecord::Base
       self.winnable.in_use!(true)
     end
     
+    # 如果需要通知用户，那么发出通知
+    if need_notify
+      send_notify_to_merchant_and_users
+    end
+    
     return true
   end
   
@@ -140,6 +145,46 @@ class Partin < ActiveRecord::Base
     end
     
     return true
+  end
+  
+  def send_notify_to_merchant_and_users
+    payload = {
+      first: {
+        value: "有新的广告奖励上线了，红包金额：#{winnable.try(:total_money)/ 100.0}元\n",
+        color: "#FF3030",
+      },
+      keyword1: {
+        value: "#{self.merchant.name}",
+        color: "#173177",
+      },
+      keyword2: {
+        value: "#{self.created_at.strftime('%Y-%m-%d %H:%M:%S')}",
+        color: "#173177",
+      },
+      remark: {
+        value: "点击这里进去抢红包~",
+        color: "#173177",
+      }
+    }.to_json
+    
+    user_ids = User.where(uid: SiteConfig.wx_message_admin_receipts.split(',')).pluck(:id).to_a
+    
+    # u_ids = merchant.users.joins(:wechat_profile).where('wechat_profiles').pluck(:id)
+    u_ids = User.joins(:wechat_profile, :user_merchants).where(user_merchants: { merchant_id: self.merchant_id })
+    .where('wechat_profiles.subscribe_time is not null and wechat_profiles.unsubscribe_time is null').pluck(:id)
+    
+    if u_ids.any?
+      user_ids += u_ids
+    end
+    
+    # user_ids << ownerable.id
+    ids = AdminUser.where(merchant_id: self.merchant_id).pluck(:wx_user_id)
+    
+    if ids.any?
+      user_ids = user_ids + ids
+    end
+    
+    Message.create!(message_template_id: 10, content: payload, link: "http://b.hb.small-best.com/wx/share/partin?id=#{self.uniq_id}", to_users: user_ids)
   end
   
   def self.items_for(merchant_id)
