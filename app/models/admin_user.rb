@@ -17,7 +17,7 @@ class AdminUser < ActiveRecord::Base
     "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=#{qrcode_ticket}"
   end
   
-  def unbind
+  def unbind!
     self.wx_user_id = nil
     self.save!
   end
