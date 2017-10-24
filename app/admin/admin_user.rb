@@ -13,6 +13,9 @@ ActiveAdmin.register AdminUser do
     column :email
     column :current_sign_in_at
     column :sign_in_count
+    column "微信用户", sortable: false do |o|
+      o.wx_user_id.blank? ? image_tag(o.wx_qrcode_url, size: '60x60') : raw("#{o.wx_user.format_nickname}<br><a href=\"#{unbind_admin_admin_user_path(o)}\" class=\"btn\">解除绑定</a>")
+    end
     column :created_at
     actions
   end

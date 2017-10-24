@@ -6,9 +6,20 @@ class AdminUser < ActiveRecord::Base
          :rememberable, :trackable, :validatable
   
   belongs_to :merchant
+  belongs_to :wx_user, class_name: 'User', foreign_key: 'wx_user_id'
   
   def merchant_blocked?
     !merchant.opened
+  end
+  
+  def wx_qrcode_url
+    qrcode_ticket = generate_qrcode_ticket
+    "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=#{qrcode_ticket}"
+  end
+  
+  private
+  def generate_qrcode_ticket
+    Wechat::Base.fetch_qrcode_ticket("bind:#{self.email}", false)
   end
   
 end
