@@ -9,7 +9,7 @@ class Ability
     
     can :create, :all
     can :read, [AdminUser, PayLog, Recharge, MerchantTag], merchant_id: user.merchant_id
-    can :update, AdminUser do |admin|
+    can [:update, :unbind], AdminUser do |admin|
       admin.id == user.id
     end
     

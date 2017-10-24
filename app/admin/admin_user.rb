@@ -14,15 +14,9 @@ ActiveAdmin.register AdminUser do
     column :current_sign_in_at
     column :sign_in_count
     column "微信用户", sortable: false do |o|
-      if current_admin_user.id == o.id
-        html = link_to('解除绑定', unbind_admin_admin_user_path(o), method: :put, data: { confirm: '您确定吗？' }).html_safe
-        o.wx_user_id.blank? ? image_tag(o.wx_qrcode_url, size: '120x120') :
-        raw("<div class=\"table_actions\">#{o.wx_user.try(:format_nickname)}<br>#{html}</div>")
-      else
-        # html = link_to('解除绑定', unbind_admin_admin_user_path(o), method: :put, data: { confirm: '您确定吗？' }).html_safe
-        o.wx_user_id.blank? ? image_tag(o.wx_qrcode_url, size: '120x120') :
-        raw("<div class=\"table_actions\">#{o.wx_user.try(:format_nickname)}</div>")
-      end
+      html = link_to('解除绑定', unbind_admin_admin_user_path(o), method: :put, data: { confirm: '您确定吗？' }).html_safe
+      o.wx_user_id.blank? ? image_tag(o.wx_qrcode_url, size: '120x120') :
+      raw("<div class=\"table_actions\">#{o.wx_user.try(:format_nickname)}<br>#{html}</div>")
     end
     column :created_at
     actions
