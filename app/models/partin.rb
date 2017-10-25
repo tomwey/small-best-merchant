@@ -109,9 +109,9 @@ class Partin < ActiveRecord::Base
     end
     
     # 如果需要通知用户，那么发出通知
-    if need_notify
-      send_notify_to_merchant_and_users
-    end
+    # if need_notify
+    send_notify_to_merchant_and_users
+    # end
     
     return true
   end
@@ -167,17 +167,21 @@ class Partin < ActiveRecord::Base
       }
     }.to_json
     
+    # 通知管理员
     user_ids = User.where(uid: SiteConfig.wx_message_admin_receipts.split(',')).pluck(:id).to_a
     
-    # u_ids = merchant.users.joins(:wechat_profile).where('wechat_profiles').pluck(:id)
-    u_ids = User.joins(:wechat_profile, :user_merchants).where(user_merchants: { merchant_id: self.merchant_id })
-    .where('wechat_profiles.subscribe_time is not null and wechat_profiles.unsubscribe_time is null').pluck(:id)
+    # 通知用户
+    if need_notify
+      u_ids = User.joins(:wechat_profile, :user_merchants).where(user_merchants: { merchant_id: self.merchant_id })
+      .where('wechat_profiles.subscribe_time is not null and wechat_profiles.unsubscribe_time is null').pluck(:id)
     
-    if u_ids.any?
-      user_ids += u_ids
+      if u_ids.any?
+        user_ids += u_ids
+      end
     end
     
     # user_ids << ownerable.id
+    # 通知商家
     ids = AdminUser.where(merchant_id: self.merchant_id).pluck(:wx_user_id)
     
     if ids.any?
