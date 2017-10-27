@@ -4,6 +4,8 @@ ActiveAdmin.register MerchantTag do
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #
 permit_params :name
+
+config.filters = false
 #
 # or
 #
@@ -23,7 +25,7 @@ index do
   column 'at' do |o|
     o.created_at.strftime('%Y年%m月%d日 %H:%M:%S')
   end
-  actions
+  # actions
   
 end
 

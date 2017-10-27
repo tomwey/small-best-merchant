@@ -6,6 +6,11 @@ ActiveAdmin.register InfoItem do
 #
 permit_params :title, :image, :body
 
+filter :uniq_id, label: 'ID'
+filter :title, label: '标题'
+filter :created_at, label: '创建时间'
+filter :updated_at, label: '更新时间'
+
 index do
   selectable_column
   column :uniq_id, sortable: false

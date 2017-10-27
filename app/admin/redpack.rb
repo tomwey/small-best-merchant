@@ -3,6 +3,9 @@ ActiveAdmin.register Redpack do
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #
+
+config.filters = false
+
 permit_params :_type, :money, :is_cash, :total_count, :min_money, 
   redpack_send_config_attributes: [:id, :send_name, :wishing, :act_name, :remark, :scene_id, :_destroy]
 #
@@ -13,6 +16,9 @@ index do
   column '红包类型', sortable: false do |o|
     o._type == 0 ? '拼手气红包' : '普通红包'
   end
+  column '红包用途', sortable: false do |o|
+    o.use_type == 0 ? '广告红包' : '分享红包'
+  end
   column '总金额' do |o|
     "#{o.total_money / 100.0}"
   end
@@ -21,10 +27,18 @@ index do
   end
   column '红包个数', :total_count
   column '发出个数', :sent_count
-  
+  column '是否是现金红包', sortable: false do |o|
+    o.is_cash ? '现金红包' : '非现金红包'
+  end
+  column '使用状态', sortable: false do |o|
+    o.in_use ? '使用中' : '未使用'
+  end
+  column '红包最小值' do |o|
+    "#{((o.min_value || 5) / 100.0)}元"
+  end
   column 'at', :created_at
   
-  actions
+  # actions
 end
 
 

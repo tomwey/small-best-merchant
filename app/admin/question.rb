@@ -7,6 +7,14 @@ ActiveAdmin.register Question do
 #
 permit_params :question, :answer, :answers_str, :memo
 
+filter :id, label: 'ID'
+filter :question, label: '问题'
+filter :answer, label: '答案'
+# filter :answers
+filter :created_at, label: '创建时间'
+filter :updated_at, label: '更新时间'
+
+
 before_create do |o|
   o.merchant = current_admin_user.merchant
 end

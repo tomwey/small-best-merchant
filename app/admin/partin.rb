@@ -6,6 +6,8 @@ ActiveAdmin.register Partin do
 permit_params :item_id, :rule_type, :win_type, :rule_answer_tip, :sort, :need_notify,
   :location_str, :range, :online_at, :opened,:need_share,
   partin_share_config_attributes: [:id, :icon, :title, :win_type, :_destroy]
+  
+  config.filters = false
 
 index do
   selectable_column
@@ -149,7 +151,7 @@ form do |f|
     data: { need_share: "#{(f.object.new_record? || f.object.need_share == true) ? '1' : '0'}" }, 
     id: 'partin-share-configs', 
     for: [:partin_share_config, (f.object.partin_share_config || PartinShareConfig.new)] do |s|
-    s.input :icon, label: '分享图标', hint: '格式为png,jpg,jped,gif,尺寸为正方形；如果不设置默认会用商家的logo'
+    s.input :icon, label: '分享图标', hint: '格式为png,jpg,jped,gif,尺寸为正方形'
     s.input :icon_cache, as: :hidden
     s.input :title, label: '分享标题'
     if f.object.new_record? or !f.object.opened # 如果还未创建或者没有上架，可以进行修改
