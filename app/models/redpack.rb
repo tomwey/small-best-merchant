@@ -32,13 +32,13 @@ class Redpack < ActiveRecord::Base
     end
   end
   
-  validate :require_send_config
-  def require_send_config
-    if self.is_cash && self.redpack_send_config.blank?
-      errors.add(:base, '微信现金红包配置不能为空')
-      return false
-    end
-  end
+  # validate :require_send_config
+  # def require_send_config
+  #   if self.is_cash && self.redpack_send_config.blank?
+  #     errors.add(:base, '微信现金红包配置不能为空')
+  #     return false
+  #   end
+  # end
   
   before_create :generate_unique_id
   def generate_unique_id

@@ -71,16 +71,16 @@ form html: { multipart: true } do |f|
     f.input :is_cash, as: :boolean, input_html: { onchange: 'Redpack.toggleCashHB(this)' }
   end
   
-  f.inputs "微信现金红包配置", 
-    data: { is_cash: "#{(f.object.new_record? || f.object.is_cash == false) ? '0' : '1'}" }, 
-    id: 'redpack-send-configs', 
+  f.inputs "微信现金红包配置",
+    data: { is_cash: "#{(f.object.new_record? || f.object.is_cash == false) ? '0' : '1'}" },
+    id: 'redpack-send-configs',
     for: [:redpack_send_config, (f.object.redpack_send_config || RedpackSendConfig.new)] do |s|
-    s.input :send_name
-    s.input :wishing
-    s.input :act_name
-    s.input :remark
-    s.input :scene_id, as: :select, collection: Redpack.wx_send_scenes, 
-      prompt: '-- 选择红包发送场景 --',input_html: { style: 'width: 240px;' }
+    s.input :send_name, placeholder: "#{current_admin_user.merchant.name}（可选，如果不设置，默认为商家的名称）"
+    s.input :wishing, placeholder: '恭喜发财，大吉大利（可选）'
+    # s.input :act_name
+    # s.input :remark
+    # s.input :scene_id, as: :select, collection: Redpack.wx_send_scenes,
+      # prompt: '-- 选择红包发送场景 --',input_html: { style: 'width: 240px;' }
   end
   
   actions
