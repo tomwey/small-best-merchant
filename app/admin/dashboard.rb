@@ -84,7 +84,7 @@ ActiveAdmin.register_page "Dashboard" do
               @today_taked_money ||= PartinTakeLog.joins(:partin)
                 .where(partins: { merchant_id: current_admin_user.merchant_id })
                 .where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
-                .map { |o| o.resultable.try(:money) }.sum / 100.0
+                .map { |o| (o.resultable.try(:money) || 0) }.sum / 100.0
               
               @today_view_count ||= PartinViewLog.joins(:partin)
                 .where(partins: { merchant_id: current_admin_user.merchant_id })
