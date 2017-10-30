@@ -72,7 +72,7 @@ show do
   panel "最新参与记录" do
     table_for partin.partin_take_logs.order("id desc").limit(20) do
       column("用户") { |o| o.user.blank? ? '' : link_to(o.user.try(:format_nickname), admin_user_path(o.user))  }
-      column("抢得金额") { |o| o.resultable.try(:money) / 100.0 }
+      column("抢得金额") { |o| (o.resultable.try(:money) || 0) / 100.0 }
       column('位置') { |o| o.location }
       column('IP') { |o| o.ip }
       column("时间") { |o| o.created_at.strftime('%Y-%m-%d %H:%M:%S') }
