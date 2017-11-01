@@ -6,7 +6,7 @@ ActiveAdmin.register Redpack do
 
 config.filters = false
 
-permit_params :_type, :money, :is_cash, :total_count, :min_money, 
+permit_params :_type, :money, :is_cash, :total_count, :min_money, :use_type,
   redpack_send_config_attributes: [:id, :send_name, :wishing, :act_name, :remark, :scene_id, :_destroy]
 #
 # or
