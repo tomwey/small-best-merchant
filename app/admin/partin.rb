@@ -4,7 +4,7 @@ ActiveAdmin.register Partin do
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #
 permit_params :item_id, :rule_type, :win_type, :rule_answer_tip, :sort, :need_notify,
-  :location_str, :range, :online_at, :opened,:need_share,
+  :location_str, :range, :online_at, :opened,:need_share, { areas: [] },
   partin_share_config_attributes: [:id, :icon, :title, :win_type, :_destroy]
   
   config.filters = false
@@ -20,6 +20,9 @@ index do
   end
   column '参与规则', sortable: false do |o|
     o.ruleable_id.blank? ? '' : link_to(o.ruleable.format_type_name, [:admin, o.ruleable])
+  end
+  column '投放区域', sortable: false do |o|
+    raw("#{o.area_names}")
   end
   column '状态', sortable: false do |o|
     o.can_take ? '有剩余' : '已抢完'
@@ -137,12 +140,14 @@ form do |f|
     if f.object.new_record? or !f.object.opened
     f.input :win_type,  as: :select, label: '参与奖励', collection: Partin.win_types_for(current_admin_user.merchant_id, f.object), prompt: '-- 选择参与奖励 --'
     end
+    f.input :areas, as: :check_boxes, label: '投放区域', collection: Area.all.map { |a| ["以#{a.address}为中心#{a.range}米内的用户可以参与", a.id] }
     f.input :rule_answer_tip, placeholder: '题目的答案在广告内容中找，注意只有一次回答机会。'
     f.input :need_notify
     
     if f.object.new_record? or !f.object.opened
     f.input :need_share, as: :boolean, label: '是否支持微信分享', input_html: { onchange: 'Partin.toggleShareConfig(this)' }
     end
+    f.input :online_at, as: :string, placeholder: '2017-09-01 12:30'
     # f.input :opened
     f.input :sort
   end
@@ -160,11 +165,11 @@ form do |f|
     end
   end
   
-  f.inputs '范围信息' do
-    f.input :location_str, label: '参与地址', placeholder: '输入详细的参与地址，例如：成都市西大街1号'
-    f.input :range, placeholder: '单位为米'
-    f.input :online_at, as: :string, placeholder: '2017-09-01 12:30'
-  end
+  # f.inputs '范围信息' do
+  #   f.input :location_str, label: '参与地址', placeholder: '输入详细的参与地址，例如：成都市西大街1号'
+  #   f.input :range, placeholder: '单位为米'
+  #   f.input :online_at, as: :string, placeholder: '2017-09-01 12:30'
+  # end
   
   actions
 end

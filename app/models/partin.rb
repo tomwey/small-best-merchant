@@ -67,11 +67,20 @@ class Partin < ActiveRecord::Base
     self.location = loc
   end
   
+  before_save :remove_blank_value_for_array
+  def remove_blank_value_for_array
+    self.areas = self.areas.compact.reject(&:blank?)
+  end
+  
   after_save :remove_share_config_if_needed
   def remove_share_config_if_needed
     if !need_share
       partin_share_config.destroy if partin_share_config
     end
+  end
+  
+  def area_names
+    Area.where(id: self.areas).map { |a| "以#{a.address}为中心#{a.range}米范围内" }.join('<br>')
   end
   
   def open!
