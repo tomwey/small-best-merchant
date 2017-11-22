@@ -6,6 +6,8 @@ class Ability
     
     can :manage, [InfoItem,Redpack,Question,Partin, Area], 
       merchant_id: user.merchant_id
+      
+    can :manage, [Card], ownerable_id: user.merchant_id, ownerable_type: 'Merchant' 
     
     can :create, :all
     can :read, [AdminUser, PayLog, Recharge, MerchantTag], merchant_id: user.merchant_id
@@ -17,6 +19,9 @@ class Ability
     
     can :read, User, merchants: { id: user.merchant_id }
     can :read, [PartinViewLog, PartinTakeLog, PartinShareLog], partin: { merchant_id: user.merchant_id }
+    
+    can :read, UserCard, card: { ownerable_id: user.merchant_id, ownerable_type: 'Merchant' }
+    cannot :create, UserCard
     
     cannot :update, Redpack, merchant_id: user.merchant_id, in_use: true
     cannot :destroy, :all

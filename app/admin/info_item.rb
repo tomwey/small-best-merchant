@@ -1,6 +1,6 @@
 ActiveAdmin.register InfoItem do
   
-  menu parent: 'publish', label: '内容管理', priority: 1
+  menu parent: 'publish', label: '广告内容管理', priority: 1
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #

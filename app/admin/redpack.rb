@@ -1,5 +1,5 @@
 ActiveAdmin.register Redpack do
-  menu parent: 'publish', label: '红包管理', priority: 2 
+  menu parent: 'publish', label: '红包管理', priority: 6 
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #
