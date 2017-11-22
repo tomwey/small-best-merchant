@@ -10,6 +10,8 @@
     omniauth_callbacks:
       admin:
         failure: '三方登陆过程异常，请重试。'
+      admin_user:
+        failure: '三方登陆过程异常，请重试。'
     failure:
       already_authenticated: '您已经登录。'
       unauthenticated: '继续操作前请注册或者登录。'
@@ -21,12 +23,16 @@
       inactive: '您还没有激活帐户。'
       admin:
         not_found_in_database: '没有该用户，请您重新注册。'
+      admin_user:
+        not_found_in_database: '没有该用户，请您重新注册。'
     sessions:
       signed_in: '登录成功。'
       signed_out: '退出成功。'
       already_signed_out: '您已经退出了。'
     registrations:
       admin:
+        updated: '密码修改成功。'
+      admin_user:
         updated: '密码修改成功。'
       merchant:
         signed_up: '您的账号已成功注册。'

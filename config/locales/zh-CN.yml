@@ -118,6 +118,7 @@
       partin_view_log: '广告浏览'
       partin_share_log: '广告转发'
       partin_take_log: '广告参与'
+      area: '区域'
     attributes:
       user:
         uid: 'ID'
@@ -456,6 +457,10 @@
         rule_answer_tip: '规则答案获取提示'
         can_take: '是否可以参与'
         win_type: '参与奖励'
+      area:
+        address: '详细地址'
+        location: '位置坐标'
+        range: '限制范围'
     errors:
       models:
         user: "用户"
