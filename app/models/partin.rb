@@ -177,7 +177,11 @@ class Partin < ActiveRecord::Base
     }.to_json
     
     # 通知管理员
-    user_ids = User.where(uid: SiteConfig.wx_message_admin_receipts.split(',')).pluck(:id).to_a
+    if SiteConfig.wx_message_admin_receipts
+      user_ids = User.where(uid: SiteConfig.wx_message_admin_receipts.split(',')).pluck(:id).to_a
+    else
+      user_ids = []
+    end
     
     # 通知用户
     if need_notify
