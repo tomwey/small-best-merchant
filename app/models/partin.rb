@@ -201,7 +201,8 @@ class Partin < ActiveRecord::Base
       user_ids = user_ids + ids
     end
     
-    Message.create!(message_template_id: 10, content: payload, link: "http://b.hb.small-best.com/wx/share/partin?id=#{self.uniq_id}", to_users: user_ids)
+    # http://b.hb.small-best.com/wx/share/partin?id=#{self.uniq_id}
+    Message.create!(message_template_id: 10, content: payload, link: "", to_users: user_ids)
   end
   
   def self.items_for(merchant_id)
