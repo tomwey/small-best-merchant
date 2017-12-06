@@ -185,12 +185,12 @@ class Partin < ActiveRecord::Base
     
     # 通知用户
     if need_notify
-      u_ids = User.joins(:wechat_profile, :user_merchants).where(user_merchants: { merchant_id: self.merchant_id })
-      .where('wechat_profiles.subscribe_time is not null and wechat_profiles.unsubscribe_time is null').pluck(:id)
-    
-      if u_ids.any?
-        user_ids += u_ids
-      end
+      # u_ids = User.joins(:wechat_profile, :user_merchants).where(user_merchants: { merchant_id: self.merchant_id })
+      # .where('wechat_profiles.subscribe_time is not null and wechat_profiles.unsubscribe_time is null').pluck(:id)
+      #
+      # if u_ids.any?
+      #   user_ids += u_ids
+      # end
     end
     
     # user_ids << ownerable.id
