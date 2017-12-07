@@ -171,7 +171,7 @@ class Partin < ActiveRecord::Base
         color: "#173177",
       },
       remark: {
-        value: "\n点击详情进去抢红包~",
+        value: "   ",
         color: "#173177",
       }
     }.to_json
