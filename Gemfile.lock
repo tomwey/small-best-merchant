@@ -164,6 +164,7 @@ GEM
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
+    jpush (4.0.4)
     jquery-rails (4.3.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -362,6 +363,7 @@ DEPENDENCIES
   devise
   hiredis
   jbuilder
+  jpush
   jquery-rails
   jquery-turbolinks
   mini_magick

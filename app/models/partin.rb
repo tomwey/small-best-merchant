@@ -191,6 +191,18 @@ class Partin < ActiveRecord::Base
       # if u_ids.any?
       #   user_ids += u_ids
       # end
+      # 新的推送功能
+      # noti = Notification.where(merchant_id: merchant.id).where(_type: 2, link: self.uniq_id).first
+      # if noti.blank?
+      #   noti = Notification.create(merchant_id: merchant.id,
+      #                              title: '红包来了',
+      #                              content: "收到了一个来自#{merchant.name}红包",
+      #                              is_prod: true,
+      #                              to_users: merchant.users.verified.pluck(:id),
+      #                              _type: 2,
+      #                              link: self.uniq_id
+      #                              )
+      # end
     end
     
     # user_ids << ownerable.id

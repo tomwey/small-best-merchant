@@ -100,7 +100,7 @@ gem 'cancancan'#, '~> 1.10'
 gem 'settingslogic'
 
 # 消息推送
-# gem 'jpush'
+gem 'jpush'
 
 # API
 # gem 'grape'
