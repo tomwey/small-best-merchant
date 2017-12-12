@@ -12,8 +12,8 @@ class NotificationSendJob < ActiveJob::Base
     pusher = jpush.pusher
     
     if noti.to_users.any?
-      alias = User.verified.where(id: noti.to_users).pluck(:private_token)
-      audience = JPush::Push::Audience.new.set_alias(alias)
+      user_alias = User.verified.where(id: noti.to_users).pluck(:private_token)
+      audience = JPush::Push::Audience.new.set_alias(user_alias)
     else
       audience = 'all'
     end
