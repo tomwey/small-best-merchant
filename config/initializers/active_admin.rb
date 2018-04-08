@@ -4,7 +4,7 @@ ActiveAdmin.setup do |config|
   # Set the title that is displayed on the main layout
   # for each of the active admin pages.
   #
-  config.site_title = "小优大惠商家系统"
+  config.site_title = "惠互动商家系统"
   
   config.namespace :admin do |admin|
     admin.build_menu do |menu|
@@ -31,7 +31,7 @@ ActiveAdmin.setup do |config|
   end
   
   # 自定义页脚
-  config.footer = "版权所有 #{Date.today.year} 小优大惠"
+  config.footer = "版权所有 #{Date.today.year} 惠互动"
 
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
