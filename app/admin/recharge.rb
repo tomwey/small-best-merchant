@@ -22,7 +22,7 @@ index do
   actions
   
   div :class => "panel" do
-    h3 "充值总金额: #{Recharge.where.not(payed_at: nil).sum(:money) / 100.0}元"
+    h3 "充值总金额: #{Recharge.where.not(payed_at: nil).where(merchant_id:current_admin_user.merchant.try(:id)).sum(:money) / 100.0}元"
   end
   
 end
