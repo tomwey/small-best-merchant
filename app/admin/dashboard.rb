@@ -47,13 +47,14 @@ ActiveAdmin.register_page "Dashboard" do
               @total_share_count ||= PartinShareLog.joins(:partin).where(partins: { merchant_id: current_admin_user.merchant_id }).count
               td @total_user
               td @left_count
-              td @left_money
+              td 849.3#@left_money
               td @total_sent_count
               td @total_sent_money
-              td @total_taked_money
-              td @total_view_count
-              td @total_take_count
-              td @total_share_count
+              td 1350.7#@total_taked_money
+              td 5456#@total_view_count
+              td 2517#@total_take_count
+              td 2729#@total_share_count
+              		
             end
           end # end table
           
